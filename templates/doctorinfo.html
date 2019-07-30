@@ -1,0 +1,98 @@
+{% extends 'base.html' %}
+{% block content %}
+<link rel="stylesheet" href="/static/css/doctorinfo.css">
+<div class="content-fluid" >
+    <div class="row" id="docBscInfo">
+        {% ifequal sex 'm' %}
+        <img class="col-lg-1 col-md-1 col-lg-offset-3 col-md-offset-3 img-responsive" id="docImg" src="/static/img/doctorinfo/new_search_doctor_03.png"/>
+        {% else %}
+        <img class="col-lg-1 col-md-1 col-lg-offset-3 col-md-offset-3 img-responsive" id="docImg" src="/static/img/doctorinfo/new_search_doctor_06.png"/>
+        {% endifequal %}
+        <div class="col-lg-6 col-md-6" id="docInfoCntnt">
+            <span id="docName">{{name}} </span><small id="docJob">主任医师</small><br>
+            <span id="docHosName">{{hos}} </span><span id="docClassName">{{dep}}</span><br>
+            <span class="infogrey">地址: </span><span id="docAddr">{{address}}</span><br>
+            <span class="infogrey">简介: </span><span id="docIntro">{{info}}</span>
+        </div>
+    </div>
+    <div class="row" id="docAppntLbl">
+        <div class="col-lg-5 col-md-5 col-lg-offset-3 col-md-offset-3" id="chooseAppntTimeLbl">选择就诊时间</div>
+    </div>
+    <div class="row" id="docAppnt">
+        <div class="col-lg-5 col-md-5 col-lg-offset-3 col-md-offset-3">
+            <!--<div id="chooseAppntTime"></div>-->
+            <table class="table table-bordered table-hover" cellspacing="10px">
+                <thead>
+                <tr>
+                    <th rowspan="2" id="specialTH">就诊时段</th>
+               
+                    {% for department in date %}
+                        <th>{{department}}</th>
+                    {% endfor %}
+                </tr>
+                <tr class="appntTimeGrey">
+     
+                    {% for w in week %}
+                        <th>星期{{w}}</th>
+                    {% endfor %}
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td>上午</td>
+                    {% for morn in morning %}
+                        {% if morn %}
+                           {% url 'orderinfo' morn.0 as ourl %}
+                           <td class="appntBlue"><a href="{{ourl}}">点击预约</a></td>
+                        {% else %}
+                           <td></td>
+                        {% endif %}
+
+                    {% endfor %}
+                </tr>
+                <tr>
+                    <td>下午</td>
+                    {% for after in afternoon %}
+                        {% if after %}
+                           {% url 'orderinfo' after.0 as ourl %}
+                           <td class="appntBlue"><a href="{{ourl}}">点击预约</a></td>
+                        {% else %}
+                           <td></td>
+                        {% endif %}
+
+                    {% endfor %}
+                </tr>
+                <tr>
+                    <td>晚上</td>
+                    {% for even in evening %}
+                        {% if even %}
+                           {% url 'orderinfo' even.0 as ourl %}
+                           <td class="appntBlue"><a href="{{ourl}}">点击预约</a></td>
+                        {% else %}
+                           <td></td>
+                        {% endif %}
+
+                    {% endfor %}
+                </tr>
+
+                </tbody>
+            </table>
+        </div>
+        <div class="col-lg-3 col-md-3 "id="rule">
+            <div id="ruleLbl">挂号规则</div>
+            <div id="rulecntnt">
+                 <p>
+                        1.每日8:00左右更新后一天号源
+                    </p>
+                    <p>
+                        2.可预约明天和未来1周号源
+                    </p>
+                    <p>
+                        3.请遵守预约时间，到医院就诊
+                    </p>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %} 
